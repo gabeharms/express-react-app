@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './views/home/Home'
-import Login from './views/login/Login'
-import requireAuth from './decorators/requireAuth'
+import Home from './views/home/'
+import Login from './views/login/'
 import {
   BrowserRouter as Router,
   Route,
-  withRouter
 } from 'react-router-dom'
 
 class App extends Component {
@@ -19,13 +17,11 @@ class App extends Component {
   }
 
   render() {
-    const WrappedLogin = withRouter(Login);
-    const WrappedHome = withRouter(requireAuth(Home));
     return (
       <Router>
         <div>
-          <Route exact path="/" component={() => (<WrappedLogin updateToken={this.updateToken} />)}  />
-          <Route path="/home" component={() => (<WrappedHome token={this.state.token} />)} />   
+          <Route exact path="/" component={() => (<Login updateToken={this.updateToken} />)}  />
+          <Route path="/home" component={() => (<Home token={this.state.token} />)} />   
         </div>
       </Router>
     );
