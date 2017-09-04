@@ -5,6 +5,6 @@ export const fetchToken = (username, password) => {
     post('/session', {username: username, password: password})
       .then((data) => {
         resolve(data)
-      }).catch(() => reject());
+      }).catch(() => reject("Invalid Login Information"));
   });
 }

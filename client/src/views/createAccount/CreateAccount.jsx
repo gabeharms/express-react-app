@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {fetchToken} from './requests';
+import {createUser} from './requests';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-class Login extends Component {
+class CreateAccount extends Component {
   state = {
     username: '',
     password: '',
@@ -14,32 +14,22 @@ class Login extends Component {
     return this.state.errors.length > 0
   }
 
-  toCreateAccount = () => {
-    const {
-      history,
-    } = this.props;
-
-    history.push("/users/new")
-  }
-
-  authenticate = () => {
+  createAccount = () => {
     const {
       username,
       password,
     } = this.state
     const {
       history,
-      updateToken,
     } = this.props
 
     const handleError = errorMsg => this.setState({...this.state, errors: errorMsg});
-    const handleSucces = ({data}) => {
+    const handleSucces = (data) => {
       this.setState({...this.state, errors: ''})
-      updateToken(data)
-      history.push("/home")
+      history.push("/")
     }
 
-    fetchToken(username, password).then(handleSucces).catch(handleError);
+    createUser(username, password).then(handleSucces).catch(handleError);
   }
   render() {
     return (
@@ -66,7 +56,7 @@ class Login extends Component {
               underlineStyle={this.hasErrors() ? {borderColor: 'red'} : {}}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                  this.authenticate()
+                  this.createAccount()
                 }
               }}
             />
@@ -79,12 +69,11 @@ class Login extends Component {
           }
         </div>
         <div style={{width: '45%', margin: 'auto', textAlign: 'center'}}>
-          <RaisedButton label="Login" onClick={this.authenticate} primary={true} style={{float: 'left'}}/>
-          <RaisedButton label="Create Account" secondary={true} onClick={this.toCreateAccount} style={{float: 'right'}} />
+          <RaisedButton label="Create Account" secondary={true} onClick={this.createAccount} />
         </div>
       </div>
     )
   }
 };
 
-export default Login;
+export default CreateAccount;

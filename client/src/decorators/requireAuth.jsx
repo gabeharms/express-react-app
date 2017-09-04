@@ -1,7 +1,8 @@
 import React from 'react';
+import {isAuthed} from '../services/httpClient'
 
 const requireAuth = WrappedComponent => (props) => {
-  if (props.token) {
+  if (isAuthed()) {
     return (
       <WrappedComponent {...props} />
     )
